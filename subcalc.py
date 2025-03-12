@@ -1,4 +1,4 @@
-#!python
+#!/usr/bin/env python3
 
 from calcCIDR import cidrToMask
 import ipaddress
@@ -21,6 +21,12 @@ def main():
             obj_net.show_main_net_data()
         if args.verbose_subcidr:
             obj_net.show_subnet_data()
+
+        if args.verbose_maincidr == False and args.verbose_subcidr == False:
+            print("DISPLAY OTHER MODES\n\n"
+              "-vmc, --verbose-maincidr, use this option to show the main net cidr data\n\n"
+              "-vsc, --verbose-subcidr, use this option to show the subnet cidr data\n\n"
+              )
 
         obj_net.generete_subnets()
         
@@ -85,10 +91,6 @@ class NetBuilder:
         subnetlist = list(main_net_g.subnets(new_prefix=self.this_sub_net_cidr))
 
         subnet_v = 0
-        print("DISPLAY OTHER MODES\n\n"
-              "-vmc, --verbose-maincidr, use this option to show the main net cidr data\n\n"
-              "-vsc, --verbose-subcidr, use this option to show the subnet cidr data\n\n"
-              )
 
         print("<><><><><><><><>|SUBNET LIST|<><><><><><><><> ")
         # enumerate return an index and an object
