@@ -4,6 +4,8 @@ from calcCIDR import cidrToMask
 import ipaddress
 from argparse import ArgumentParser
 
+# TRABALHANDO EM NOVAS FUNCIONALIDADE: IMPLEMENTAÇÃO DA FLAG '-ns'
+
 def main():
     try:
         parser = ArgumentParser(description="Subnetwork calculation tool")
@@ -12,23 +14,29 @@ def main():
         parser.add_argument('-sc', '--sub-cidr', type=int, required=True, help='use this option to specify the subnet cidr')
         parser.add_argument('-vmc', '--verbose-maincidr', action='store_true', help='use this option to show the subnet cidr data')
         parser.add_argument('-vsc', '--verbose-subcidr', action='store_true', help='use this option to show the subnet cidr data')
+        parser.add_argument('-ns', '--no-subnets', action='store_true', help='use this option to hidde subnet list')
 
         args = parser.parse_args()
 
         obj_net = NetBuilder(args.internet_address, args.main_cidr, args.sub_cidr)
 
-        if args.verbose_maincidr:
+        if args.no_subnets == True:
             obj_net.show_main_net_data()
-        if args.verbose_subcidr:
             obj_net.show_subnet_data()
+        else:
+            if args.verbose_maincidr:
+                obj_net.show_main_net_data()
+            if args.verbose_subcidr:
+                obj_net.show_subnet_data()
 
-        if args.verbose_maincidr == False and args.verbose_subcidr == False:
-            print("DISPLAY OTHER MODES\n\n"
-              "-vmc, --verbose-maincidr, use this option to show the main net cidr data\n\n"
-              "-vsc, --verbose-subcidr, use this option to show the subnet cidr data\n\n"
-              )
+            if args.verbose_maincidr == False and args.verbose_subcidr == False:
+                print("DISPLAY OTHER MODES\n\n"
+                "-vmc, --verbose-maincidr, use this option to show the main net cidr data\n\n"
+                "-vsc, --verbose-subcidr, use this option to show the subnet cidr data\n\n"
+                "-ns, --no-subnets, use this option to hide subnet list\n\n"
+                )
 
-        obj_net.generete_subnets()
+            obj_net.generete_subnets()
         
     except:
         print("usage subcalc compile: subcalc -ip <ip address> -mc <CIDR main net> -sc <CIDR subnet>")
