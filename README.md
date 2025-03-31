@@ -40,6 +40,7 @@ options:
                         use this option to show the subnet cidr data
   -vsc, --verbose-subcidr
                         use this option to show the subnet cidr data
+  -ns, --no-subnets     use this option to hidde subnet list
 ```
 ### Exemplo de uso
 
